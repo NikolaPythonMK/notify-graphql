@@ -1,0 +1,61 @@
+# allPages(sort: PageSortInput, filter: PageFilterInput): [Page!]!
+# allPages(limit: Int, offset: Int): [Page!]!
+# Expand searchPages to allow searching by different fields (like title, content) with more granular control over the search conditions.
+
+scalar DateTime
+
+input CreatePageInput {
+    title: String!
+    content: String!
+    categoryId: ID!
+    color: String!
+}
+
+input UpdatePageInput {
+    id: ID!
+    title: String
+    content: String
+    color: String
+}
+
+type Query {
+    categories: [Category!]!
+    category(id: ID!): Category!
+    page(id: ID!): Page!
+    allPages: [Page!]!
+    searchPages(term: String!, categoryId: ID): [Page!]!
+    trash: [Page!]!
+}
+
+type Mutation {
+    createCategory(name: String!): Category!
+    updateCategory(id: ID!, name: String!): Category!
+    deleteCategory(id: ID!): Category!
+
+    createPage(input: CreatePageInput): Page! 
+    updatePage(input: UpdatePageInput): Page!
+    deletePage(id: ID!): Page!
+    toggleFavoritePage(id: ID!): Page!
+
+    restorePage(pageId: ID!): Page!
+    clearTrash: Int!
+}
+
+type Page {
+    id: ID!
+    title: String!
+    content: String!
+    createdAt: DateTime!
+    editedAt: DateTime!
+    color: String!
+    short_content: String!
+    category: Category!
+    isFavorited: Boolean!
+    isTrashed: Boolean!
+}
+
+type Category {
+    id: ID!
+    name: String!
+    pages: [Page!]!
+}

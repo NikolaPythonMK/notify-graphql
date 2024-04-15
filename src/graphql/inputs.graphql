@@ -1,0 +1,13 @@
+input CreatePageInput {
+    title: String!
+    content: String!
+    categoryId: ID!
+    color: String!
+}
+
+input UpdatePageInput {
+    id: ID!
+    title: String
+    content: String
+    color: String
+}
